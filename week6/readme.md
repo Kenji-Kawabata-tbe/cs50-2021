@@ -4,7 +4,7 @@ alias python='python3'
 
 pythonの仮想環境
 python3 -m venv ~/mypy
-source mypy/bin/activate.fish # macOS/Linux
+source ~/mypy/bin/activate.fish # macOS/Linux
 mypy\Scripts\activate     # Windows
 
 # パッケージをインストール
