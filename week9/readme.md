@@ -13,3 +13,9 @@ pip3 install flask
 deactivate
 
 20250203 1:10:32
+
+
+sqlite3 froshims.db
+CREATE TABLE registrants (id INTEGER, name TEXT NOT NULL, sport TEXT NOT NULL, PRIMARY KEY(id));
+
+20250204 1:54:30

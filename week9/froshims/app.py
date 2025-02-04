@@ -1,17 +1,29 @@
-from flask import Flask, render_template, request
+# セッション
+from flask import Flask, redirect, render_template, request, session
+from flask_session import Session
 
-app = Flask(__name__) # __name__は現在のファイル名を指している
+app = Flask(__name__)
 
+app.config["SESSION_PERMANENT"] = False
+app.config["SESSION_TYPE"] = "filesystem"
+Session(app)
 
 @app.route("/")
-def index() :
+def index():
+    if not session.get("name"):
+        return redirect("/login")
     return render_template("index.html")
 
 
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    if request.method == "POST":
+        session["name"] = request.form.get("name")
+        return redirect("/")
+    return render_template("login.html")
 
-@app.route("/register", methods=["POST"])
-def register():
-    # request.form.getでnameが無いか、request.form.get("sport")がBasketball、Soccer、Ultimate Frisbeeのいずれでもない場合
-    if not request.form.get("name") or request.form.get("sport") not in ["Basketball", "Soccer", "Ultimate Frisbee" ]:
-        return render_template("failure.html")
-    return render_template("success.html")
+
+@app.route("/logout")
+def logout():
+    session["name"] = None # nameを空にする
+    return redirect("/")
